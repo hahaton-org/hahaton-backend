@@ -2,40 +2,37 @@ package com.trymad.hahaton.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "partners")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Partner {
 
     @Id
-    @GeneratedValue
-    @UuidGenerator
     private UUID id;
 
-    @Column(unique = true)
     private String name;
-
-    @Column(nullable = false, unique = true, length = 10)
     private String inn;
-
-    @Column(nullable = false, unique = true)
     private String mail;
-
-    @Column(nullable = false)
     private boolean active;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PartnerBonus> partnerBonuses;
+
+    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PartnerBonusArchive> partnerBonusArchives;
 }
