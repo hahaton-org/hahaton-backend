@@ -35,5 +35,5 @@ public class Achievement {
     private List<Bonus> bonuses;
 
     @OneToMany(mappedBy = "achievement", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BonusArchive> bonusArchives;
+    private List<Bonus> bonusArchives;
 }

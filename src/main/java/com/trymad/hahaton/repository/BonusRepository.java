@@ -13,5 +13,5 @@ public interface BonusRepository extends JpaRepository<Bonus, UUID> {
         "achievement",
         "category",
     })
-    Optional<Bonus> findById(UUID id);
+    Optional<Bonus> findFetchById(UUID id);
 }

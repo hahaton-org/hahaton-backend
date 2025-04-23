@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: "1"
       author: trymad
       changes:
         - createTable:
@@ -11,6 +11,21 @@ databaseChangeLog:
                   type: UUID
                   constraints:
                     primaryKey: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(1255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: middle_name 
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
               - column:
                   name: inn
                   type: VARCHAR(12)
@@ -52,7 +67,7 @@ databaseChangeLog:
                     nullable: false
 
   - changeSet:
-      id: 2
+      id: "2"
       author: trymad
       changes:
         - createTable:
@@ -68,6 +83,11 @@ databaseChangeLog:
                   type: VARCHAR(255)
                   constraints:
                     unique: true
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
               - column:
                   name: inn
                   type: VARCHAR(10)
@@ -98,7 +118,7 @@ databaseChangeLog:
                     nullable: false
 
   - changeSet:
-      id: 3
+      id: "3"
       author: trymad
       changes:
         - createTable:
@@ -117,7 +137,7 @@ databaseChangeLog:
                     unique: true
 
   - changeSet:
-      id: 4
+      id: "4"
       author: trymad
       changes:
         - createTable:
@@ -156,7 +176,7 @@ databaseChangeLog:
             constraintName: fk_achievements_volunteer
 
   - changeSet:
-      id: 5
+      id: "5"
       author: trymad
       changes:
         - createTable:
@@ -206,7 +226,7 @@ databaseChangeLog:
             constraintName: fk_bonuses_category
 
   - changeSet:
-      id: 6
+      id: "6"
       author: trymad
       changes:
         - createTable:
@@ -225,6 +245,11 @@ databaseChangeLog:
               - column:
                   name: category_id
                   type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: BOOLEAN
                   constraints:
                     nullable: false
               - column:
@@ -256,8 +281,8 @@ databaseChangeLog:
             constraintName: fk_partner_bonuses_category
 
   - changeSet:
-      id: trymad
-      author: you
+      id: "7"
+      author: trymad
       changes:
         - createTable:
             tableName: archieve

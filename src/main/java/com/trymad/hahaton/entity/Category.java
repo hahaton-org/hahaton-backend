@@ -23,11 +23,11 @@ public class Category {
     private List<Bonus> bonuses;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BonusArchive> bonusArchives;
+    private List<Bonus> bonusArchives;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PartnerBonus> partnerBonuses;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PartnerBonusArchive> partnerBonusArchives;
+    private List<PartnerBonus> partnerBonusArchives;
 }

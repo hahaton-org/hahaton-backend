@@ -20,12 +20,13 @@ public class GivenBonus {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bonus_id")
-    private BonusArchive bonus;
+    private Bonus bonus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partner_bonus_id")
-    private PartnerBonusArchive partnerBonus;
+    private PartnerBonus partnerBonus;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
 }

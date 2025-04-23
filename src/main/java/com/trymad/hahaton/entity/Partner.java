@@ -21,6 +21,7 @@ public class Partner {
 
     private String name;
     private String inn;
+    private String type;
     private String mail;
     private boolean active;
 
@@ -34,5 +35,5 @@ public class Partner {
     private List<PartnerBonus> partnerBonuses;
 
     @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<PartnerBonusArchive> partnerBonusArchives;
+    private List<PartnerBonus> partnerBonusArchives;
 }

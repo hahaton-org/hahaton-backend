@@ -27,6 +27,10 @@ public class PartnerBonus {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "active")
+    private boolean active;
+
+    @Column(name = "description")
     private String description;
 
     @Column(name = "created_at")
@@ -35,4 +39,6 @@ public class PartnerBonus {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "partnerBonus", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<GivenBonus> givenBonuses;
 }

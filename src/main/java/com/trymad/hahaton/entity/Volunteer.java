@@ -21,6 +21,9 @@ public class Volunteer {
     private UUID id;
 
     private String inn;
+    private String firstName;
+    private String lastName;
+    private String middleName;
     private String phone;
     private String mail;
 

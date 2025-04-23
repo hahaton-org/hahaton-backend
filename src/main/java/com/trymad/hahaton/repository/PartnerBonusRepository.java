@@ -1,6 +1,7 @@
 package com.trymad.hahaton.repository;
 
 import com.trymad.hahaton.entity.PartnerBonus;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +14,6 @@ public interface PartnerBonusRepository extends JpaRepository<PartnerBonus, UUID
         "partner",
         "category",
     })
-    Optional<PartnerBonus> findById(UUID id);
+    Optional<PartnerBonus> findFetchById(UUID id);
+
 }

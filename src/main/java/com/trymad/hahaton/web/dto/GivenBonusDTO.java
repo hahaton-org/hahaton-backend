@@ -1,4 +1,4 @@
-package com.trymad.hahaton.web.controller.dto;
+package com.trymad.hahaton.web.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

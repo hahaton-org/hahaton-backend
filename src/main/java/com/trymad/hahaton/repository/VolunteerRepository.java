@@ -14,5 +14,5 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, UUID> {
         "achievements.bonuses",
         "achievements.bonusArchives"
     })
-    Optional<Volunteer> findById(UUID id);
+    Optional<Volunteer> findFetchById(UUID id);
 }

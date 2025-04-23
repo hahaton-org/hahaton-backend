@@ -13,5 +13,5 @@ public interface PartnerRepository extends JpaRepository<Partner, UUID> {
         "partnerBonuses",
         "partnerBonusArchives"
     })
-    Optional<Partner> findById(UUID id);
+    Optional<Partner> findFetchById(UUID id);
 }

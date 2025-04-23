@@ -1,4 +1,4 @@
-package com.trymad.hahaton.web.controller.dto;
+package com.trymad.hahaton.web.dto;
 
 import com.trymad.hahaton.entity.CategoryType;
 
