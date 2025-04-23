@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -43,7 +44,7 @@ public class BonusService {
         final UUID bonusId = UUID.randomUUID();
 
         final Achievement achievement = achievementService.getById(dto.achievementId());
-        final Category category = categoryService.getById(dto.categoryId());
+        final Category category = categoryService.getByName(dto.category());
 
         final Bonus bonus = Bonus.builder()
                 .id(bonusId)
@@ -68,6 +69,11 @@ public class BonusService {
 		Bonus updatedBonus = bonusRepository.save(bonus);
 	
 		return updatedBonus;
+	}
+
+	@Transactional(readOnly = true)
+	public List<Bonus> getActual() {
+		return bonusRepository.findActual();
 	}
 
     public void delete(UUID id) {

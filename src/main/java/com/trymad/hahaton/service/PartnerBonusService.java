@@ -1,5 +1,6 @@
 package com.trymad.hahaton.service;
 
+import com.trymad.hahaton.entity.Bonus;
 import com.trymad.hahaton.entity.PartnerBonus;
 import com.trymad.hahaton.repository.PartnerBonusRepository;
 import com.trymad.hahaton.web.dto.create.PartnerBonusCreateDTO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,7 +43,7 @@ public class PartnerBonusService {
         final UUID bonusId = UUID.randomUUID();
 
         final var partner = partnerService.getById(dto.partnerId());
-        final var category = categoryService.getById(dto.categoryId());
+        final var category = categoryService.getByName(dto.category());
 
         final PartnerBonus partnerBonus = PartnerBonus.builder()
                 .id(bonusId)
@@ -78,6 +80,11 @@ public class PartnerBonusService {
 		PartnerBonus updatedBonus = partnerBonusRepository.save(partnerBonus);
 
 		return updatedBonus;
+	}
+
+	@Transactional(readOnly = true)
+	public List<Bonus> getActual() {
+		return partnerBonusRepository.findActual();
 	}
 
 

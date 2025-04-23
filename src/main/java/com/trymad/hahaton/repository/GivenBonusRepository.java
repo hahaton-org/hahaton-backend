@@ -14,4 +14,5 @@ public interface GivenBonusRepository extends JpaRepository<GivenBonus, UUID> {
         "partnerBonus"
     })
     Optional<GivenBonus> findFetchById(UUID id);
+
 }
