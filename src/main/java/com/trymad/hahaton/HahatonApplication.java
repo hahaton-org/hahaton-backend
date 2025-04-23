@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HahatonApplication {
 
-	public static void main(String[] args) {g
+	public static void main(String[] args) {
 		SpringApplication.run(HahatonApplication.class, args);
 	}
 
