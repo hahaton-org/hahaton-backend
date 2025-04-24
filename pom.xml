@@ -23,6 +23,7 @@
 		<dotenv.version>4.0.0</dotenv.version>
 		<openscv.version>5.9</openscv.version>
 		<springdoc.openapi.version>2.6.0</springdoc.openapi.version>
+		<jjwt.version>0.12.6</jjwt.version>
 	</properties>
 
 	<dependencies>
@@ -97,6 +98,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
 		</dependency>
 
 	</dependencies>
