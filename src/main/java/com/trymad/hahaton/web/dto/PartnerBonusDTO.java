@@ -9,6 +9,7 @@ public record PartnerBonusDTO(
     UUID id,
     UUID partnerId,
     String partnerName,
+    String partnerType,
     CategoryType category,
     String description,
     boolean active,

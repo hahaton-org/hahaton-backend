@@ -14,6 +14,7 @@ public record GivenBonusDTO(
     String volunteerMiddleName,
     UUID partnerId,
     String partnerName,
+    String partnerType,
     CategoryType category,
     UUID partnerBonusId,
     LocalDateTime createdAt

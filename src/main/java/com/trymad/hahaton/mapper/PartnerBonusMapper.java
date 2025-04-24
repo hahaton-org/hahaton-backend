@@ -13,6 +13,7 @@ public interface PartnerBonusMapper {
 
 	@Mapping(source = "partner.id", target = "partnerId")
 	@Mapping(source = "partner.name", target = "partnerName")
+	@Mapping(source = "partner.type", target = "partnerType")
 	@Mapping(source = "category.name", target = "category")
 	PartnerBonusDTO toDto(PartnerBonus entity);
 

@@ -20,6 +20,7 @@ public interface GivenBonusMapper {
 	@Mapping(source = "bonus.category.name", target = "category")
 	@Mapping(source = "partnerBonus.partner.id", target = "partnerId")
 	@Mapping(source = "partnerBonus.partner.name", target = "partnerName")
+	@Mapping(source = "partnerBonus.partner.type", target = "partnerType")
 	GivenBonusDTO toDto(GivenBonus entity);
 
     List<GivenBonusDTO> toDto(List<GivenBonus> entities);
