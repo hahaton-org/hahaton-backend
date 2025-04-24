@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,6 +34,11 @@ public class VolunteerService {
         return volunteerRepository.findFetchById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with id: " + id));
     }
+
+	@Transactional(readOnly = true)
+	public List<Volunteer> getAll() {
+		return volunteerRepository.findAll();
+	}
 
     public Volunteer create(VolunteerCreateDTO dto) {
         final LocalDateTime now = LocalDateTime.now();

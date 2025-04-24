@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,6 +32,12 @@ public class AchievementService {
         return achievementRepository.findFetchById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Achievement not found with id: " + id));
     }
+
+	public List<Achievement> getAll(UUID volunteerId) {
+		List<Achievement> result = achievementRepository.findAll();
+		if(volunteerId != null) result = result.stream().filter(a -> a.getVolunteer().getId().equals(volunteerId)).toList();
+		return result;
+	}
 
     public Achievement create(AchievementCreateDTO dto) {
         final LocalDateTime now = LocalDateTime.now();

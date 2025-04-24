@@ -19,7 +19,7 @@ public class Achievement {
     @Id
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "volunteer_id")
     private Volunteer volunteer;
 

@@ -8,6 +8,11 @@ import com.trymad.hahaton.entity.CategoryType;
 public record BonusDTO (
     UUID id,
     UUID achievementId,
+    String achievementDesc,
+    UUID volunteerId,
+    String volunteerFirstName,
+    String volunteerLastName,
+    String volunteerMiddleName,
     CategoryType category,
     boolean active,
     LocalDateTime createdAt

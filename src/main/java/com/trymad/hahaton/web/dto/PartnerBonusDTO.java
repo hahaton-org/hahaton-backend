@@ -8,6 +8,7 @@ import com.trymad.hahaton.entity.CategoryType;
 public record PartnerBonusDTO(
     UUID id,
     UUID partnerId,
+    String partnerName,
     CategoryType category,
     String description,
     boolean active,

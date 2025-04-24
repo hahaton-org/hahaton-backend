@@ -30,7 +30,7 @@ public class GivenBonusService {
 
     @Transactional(readOnly = true)
     public GivenBonus getFetchById(UUID id) {
-        return givenBonusRepository.findFetchById(id)
+        return givenBonusRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("GivenBonus not found with id: " + id));
     }
 

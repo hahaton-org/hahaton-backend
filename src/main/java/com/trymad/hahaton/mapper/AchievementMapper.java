@@ -12,6 +12,9 @@ import com.trymad.hahaton.web.dto.AchievementDTO;
 public interface AchievementMapper {
 
 	@Mapping(source = "volunteer.id", target = "volunteerId")
+	@Mapping(source = "volunteer.firstName", target = "volunteerFirstName")
+	@Mapping(source = "volunteer.lastName", target = "volunteerLastName")
+	@Mapping(source = "volunteer.middleName", target = "volunteerMiddleName")
 	AchievementDTO toDto(Achievement entity);
 
     List<AchievementDTO> toDto(List<Achievement> entities);

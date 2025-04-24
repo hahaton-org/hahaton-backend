@@ -1,6 +1,6 @@
 package com.trymad.hahaton.service;
 
-import com.trymad.hahaton.entity.Bonus;
+import com.trymad.hahaton.entity.CategoryType;
 import com.trymad.hahaton.entity.PartnerBonus;
 import com.trymad.hahaton.repository.PartnerBonusRepository;
 import com.trymad.hahaton.web.dto.create.PartnerBonusCreateDTO;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,9 +35,24 @@ public class PartnerBonusService {
 
     @Transactional(readOnly = true)
     public PartnerBonus getFetchById(UUID id) {
-        return partnerBonusRepository.findFetchById(id)
+        return partnerBonusRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("PartnerBonus not found with id: " + id));
     }
+
+	@Transactional(readOnly = true)
+	public List<PartnerBonus> getAll(boolean actual, CategoryType category) {
+		List<PartnerBonus> result = partnerBonusRepository.findAll();
+		if(actual) result = result.stream().filter(pb -> pb.isActive()).toList();
+		if(category != null) result.stream().filter(pb -> pb.getCategory().getName().equals(category)).toList();
+		return result;
+	}
+
+	public List<PartnerBonus>getBonusesByPartnerId(UUID partnerId, boolean actual) {
+		final List<PartnerBonus> partnerBonus = partnerBonusRepository.findByPartnerId(partnerId);
+		List<PartnerBonus> result = partnerBonus;
+		if(actual) result = result.stream().filter(pb -> pb.isActive()).collect(Collectors.toList());
+		return result;
+	}
 
     public PartnerBonus create(PartnerBonusCreateDTO dto) {
         final LocalDateTime now = LocalDateTime.now();
@@ -83,7 +99,7 @@ public class PartnerBonusService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Bonus> getActual() {
+	public List<PartnerBonus> getActual() {
 		return partnerBonusRepository.findActual();
 	}
 

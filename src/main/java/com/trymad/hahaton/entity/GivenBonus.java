@@ -18,11 +18,11 @@ public class GivenBonus {
     @Id
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "bonus_id")
     private Bonus bonus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "partner_bonus_id")
     private PartnerBonus partnerBonus;
 

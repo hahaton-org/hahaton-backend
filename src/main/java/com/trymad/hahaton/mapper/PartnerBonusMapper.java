@@ -12,6 +12,7 @@ import com.trymad.hahaton.web.dto.PartnerBonusDTO;
 public interface PartnerBonusMapper {
 
 	@Mapping(source = "partner.id", target = "partnerId")
+	@Mapping(source = "partner.name", target = "partnerName")
 	@Mapping(source = "category.name", target = "category")
 	PartnerBonusDTO toDto(PartnerBonus entity);
 

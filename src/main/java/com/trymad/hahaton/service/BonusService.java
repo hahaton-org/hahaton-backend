@@ -3,6 +3,7 @@ package com.trymad.hahaton.service;
 import com.trymad.hahaton.entity.Achievement;
 import com.trymad.hahaton.entity.Bonus;
 import com.trymad.hahaton.entity.Category;
+import com.trymad.hahaton.entity.CategoryType;
 import com.trymad.hahaton.repository.BonusRepository;
 import com.trymad.hahaton.web.dto.create.BonusCreateDTO;
 import com.trymad.hahaton.web.dto.update.BonusUpdateDTO;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +37,24 @@ public class BonusService {
 
     @Transactional(readOnly = true)
     public Bonus getFetchById(UUID id) {
-        return bonusRepository.findFetchById(id)
+        return bonusRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Bonus not found with id: " + id));
     }
+
+	@Transactional(readOnly = true)
+	public List<Bonus> getAll(boolean actual, CategoryType category) {
+		List<Bonus> result = bonusRepository.findAll();
+		if(actual) result = result.stream().filter(curBonus -> curBonus.isActive()).toList();
+		if(category != null) result = result.stream().filter(curBonus -> curBonus.getCategory().getName().equals(category)).toList();
+		return result;
+	}
+
+	public List<Bonus> getBonusesByVolunteerId(UUID volunteerId, boolean actual) {
+		final List<Bonus> volunteerBonuses = bonusRepository.findByVolunteerId(volunteerId);
+		List<Bonus> result = volunteerBonuses;
+		if(actual) result = result.stream().filter(bonus -> bonus.isActive()).collect(Collectors.toList());
+		return result;
+	}
 
     public Bonus create(BonusCreateDTO dto) {
         final LocalDateTime now = LocalDateTime.now();
@@ -74,6 +91,10 @@ public class BonusService {
 	@Transactional(readOnly = true)
 	public List<Bonus> getActual() {
 		return bonusRepository.findActual();
+	}
+
+	public void deleteAll() {
+		bonusRepository.deleteAll();
 	}
 
     public void delete(UUID id) {

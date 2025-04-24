@@ -17,6 +17,7 @@ public class Category {
     @Id
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     private CategoryType name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

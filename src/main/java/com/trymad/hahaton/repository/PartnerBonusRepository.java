@@ -1,11 +1,10 @@
 package com.trymad.hahaton.repository;
 
-import com.trymad.hahaton.entity.Bonus;
 import com.trymad.hahaton.entity.PartnerBonus;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,15 +12,18 @@ import java.util.UUID;
 
 public interface PartnerBonusRepository extends JpaRepository<PartnerBonus, UUID> {
 
-    @EntityGraph(attributePaths = {
-        "partner",
-        "category",
-    })
-    Optional<PartnerBonus> findFetchById(UUID id);
+
+    Optional<PartnerBonus> findById(UUID id);
 
     @Query("""
         SELECT pb FROM PartnerBonus pb
         WHERE pb.active = true
     """)
-    List<Bonus> findActual();
+    List<PartnerBonus> findActual();
+
+    @Query("""
+        SELECT pb FROM PartnerBonus pb
+        WHERE pb.partner.id = :id
+    """)
+    List<PartnerBonus> findByPartnerId(@Param("id") UUID id);
 }

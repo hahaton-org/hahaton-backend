@@ -15,4 +15,5 @@ public interface AchievementRepository extends JpaRepository<Achievement, UUID> 
         "bonusArchives"
     })
     Optional<Achievement> findFetchById(UUID id);
+
 }
