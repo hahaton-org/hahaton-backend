@@ -70,9 +70,8 @@ public class AuthenticationService {
         return jwtTokenProvider.generateToken(new MyUserDetails(user));
     }
 
-    public String registryVolunteer(LoginDTO dto) {
-		Volunteer volunteer = volunteerService.getByMail(dto.mail());
-		final MyUser user = registryUser(dto, volunteer.getId(), MyRole.ROLE_VOLUNTEER);
+    public String registryVolunteer(LoginDTO dto, UUID id) {
+		final MyUser user = registryUser(dto, id, MyRole.ROLE_VOLUNTEER);
         return jwtTokenProvider.generateToken(new MyUserDetails(user));
     }
 
