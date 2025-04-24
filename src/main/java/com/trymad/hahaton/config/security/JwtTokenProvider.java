@@ -39,16 +39,6 @@ public class JwtTokenProvider {
         this.secret = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
     }
 
-
-    @Bean
-    AuthenticationProvider getAuthenticationProvider(
-            PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
-        DaoAuthenticationProvider authManager = new DaoAuthenticationProvider();
-        authManager.setPasswordEncoder(passwordEncoder);
-        authManager.setUserDetailsService(userDetailsService);
-        return authManager;
-    }
-
     public String generateToken(UserDetails userDetails) {
         MyUserDetails user = (MyUserDetails) userDetails;
         final Map<String, Object> claims = new HashMap<>();

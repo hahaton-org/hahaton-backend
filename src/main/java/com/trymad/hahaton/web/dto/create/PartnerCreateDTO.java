@@ -5,5 +5,5 @@ public record PartnerCreateDTO(
     String type,
     String inn,
     String mail,
-    String password
+    String password  
 ) {}

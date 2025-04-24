@@ -1,6 +1,7 @@
 package com.trymad.hahaton.config.entity;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream()
+        return new HashSet<>(user.getRoles()).stream()
                 .map(Role::getName)
                 .map(role -> new SimpleGrantedAuthority(role.toString()))
                 .collect(Collectors.toSet());

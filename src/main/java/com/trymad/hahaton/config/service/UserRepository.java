@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.trymad.hahaton.config.entity.MyUser;
 
+import jakarta.transaction.Transactional;
+
 @Repository
 public interface UserRepository extends JpaRepository<MyUser, UUID> {
 	
+	@Transactional
 	Optional<MyUser> findByMail(String mail);
 	
 }

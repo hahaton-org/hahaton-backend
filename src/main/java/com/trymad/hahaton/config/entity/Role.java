@@ -19,7 +19,5 @@ public class Role {
 	@Enumerated(EnumType.STRING)
     private MyRole name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<MyUser> users;
 }
 

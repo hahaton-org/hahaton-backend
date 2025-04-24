@@ -2,6 +2,8 @@ package com.trymad.hahaton.config.service;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
+
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class MyUserDetailService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getMail())
                 .password(user.getPassword())
-                .roles(user.getRoles().stream().map(r -> r.getName()).toArray(String[]::new))
+                .roles(new HashSet<>(user.getRoles()).stream().map(r -> r.getName().name()).toArray(String[]::new))
                 .build();
     }
 }

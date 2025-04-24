@@ -4,12 +4,16 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,17 +38,18 @@ public class AuthenticationService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authManager;
-	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
 	private final PartnerService partnerService;
 	private final RoleRepository roleRepository;
 	private final VolunteerService volunteerService;
 
     public String createJwtToken(LoginDTO loginDTO) {
-        final UserDetails userDetails = (UserDetails) authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.mail(), loginDTO.password())).getPrincipal();
+        final MyUser user = userRepository.findByMail(loginDTO.mail()).orElseThrow( () -> new RuntimeException());
+		if(!user.getPassword().equals(loginDTO.password())) {
+			throw new RuntimeException("incorrect password");
+		}
 
-        return jwtTokenProvider.generateToken(userDetails);
+        return jwtTokenProvider.generateToken(new MyUserDetails(user));
     }
 
     public Authentication authenticate(String token) {
@@ -74,7 +79,7 @@ public class AuthenticationService {
 	private MyUser registryUser(LoginDTO loginDTO, UUID id, MyRole role) {
 		final MyUser user = MyUser.builder()
 		.mail(loginDTO.mail())
-		.password(passwordEncoder.encode(loginDTO.password()))
+		.password(loginDTO.password())
 		.roles(Set.of(roleRepository.findByName(role).get()))
 		.id(id).build();
 		
