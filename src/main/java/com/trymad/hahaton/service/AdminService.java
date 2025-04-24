@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,9 +72,8 @@ public class AdminService {
 			return volunteerService.getByMail(csvDto.getMail());
 		}
 
-		authenticationService.registryVolunteer(new LoginDTO(csvDto.getMail(), "12345"));
-
-
+		
+		
 		String[] fio = csvDto.getFio().split(" ");
 		VolunteerCreateDTO createDto = new VolunteerCreateDTO(
 			csvDto.getInn(), 
@@ -83,8 +83,10 @@ public class AdminService {
 			fio[2], 
 			csvDto.getMail(),
 			csvDto.getBirthday());
-		
-		return volunteerService.create(createDto);
+			
+		Volunteer created = volunteerService.create(createDto);
+		authenticationService.registryVolunteer(new LoginDTO(csvDto.getMail(), "12345"), created.getId());
+		return created;
 	}
 
 	private AchievementCreateDTO addAchievement(CsvDTO csvDTO, Volunteer volunteer) {
