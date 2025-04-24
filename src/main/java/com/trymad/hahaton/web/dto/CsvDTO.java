@@ -18,4 +18,5 @@ public class CsvDTO {
 	LocalDate birthday;
 	
 	String achievements;
+	
 }
