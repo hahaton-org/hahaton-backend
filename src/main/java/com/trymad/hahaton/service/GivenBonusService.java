@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,6 +33,11 @@ public class GivenBonusService {
     public GivenBonus getFetchById(UUID id) {
         return givenBonusRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("GivenBonus not found with id: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<GivenBonus> getAll() {
+        return givenBonusRepository.findAll();
     }
 
     public GivenBonus create(GivenBonusCreateDTO dto) {

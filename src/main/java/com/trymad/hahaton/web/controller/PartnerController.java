@@ -10,7 +10,9 @@ import com.trymad.hahaton.service.PartnerBonusService;
 import com.trymad.hahaton.service.PartnerService;
 import com.trymad.hahaton.web.dto.PartnerBonusDTO;
 import com.trymad.hahaton.web.dto.PartnerDTO;
+import com.trymad.hahaton.web.dto.update.PartnerUpdateDTO;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,6 +47,11 @@ public class PartnerController {
 		@PathVariable UUID id,
 		@RequestParam(required = false, defaultValue = "true") boolean actual) {
 		return partnerBonusMapper.toDto(partnerBonusService.getBonusesByPartnerId(id, actual));
+	}     
+
+	@PutMapping("/{id}")
+	public PartnerDTO update(@PathVariable UUID id, @RequestBody PartnerUpdateDTO dto) {
+		return partnerMapper.toDto(partnerService.update(id, dto));
 	}
 	
 }
