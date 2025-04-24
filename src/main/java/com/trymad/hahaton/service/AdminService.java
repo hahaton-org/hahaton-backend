@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.exceptions.CsvValidationException;
+import com.trymad.hahaton.config.security.AuthenticationService;
 import com.trymad.hahaton.entity.Achievement;
 import com.trymad.hahaton.entity.CategoryType;
 import com.trymad.hahaton.entity.Volunteer;
 import com.trymad.hahaton.web.dto.CsvDTO;
+import com.trymad.hahaton.web.dto.LoginDTO;
 import com.trymad.hahaton.web.dto.create.AchievementCreateDTO;
 import com.trymad.hahaton.web.dto.create.BonusCreateDTO;
 import com.trymad.hahaton.web.dto.create.VolunteerCreateDTO;
@@ -28,6 +30,7 @@ public class AdminService {
 	private final VolunteerService volunteerService;
 	private final AchievementService achievementService;
 	private final BonusService bonusService;
+	private final AuthenticationService authenticationService;
 
 	public void updateBonuses(MultipartFile csv) throws CsvValidationException, IllegalStateException, IOException {
 		final Map<Integer, CsvDTO> csvList = parser.parse(csv);
@@ -67,6 +70,9 @@ public class AdminService {
 		if(volunteerService.existsByMail(csvDto.getMail())) {
 			return volunteerService.getByMail(csvDto.getMail());
 		}
+
+		authenticationService.registryVolunteer(new LoginDTO(csvDto.getMail(), "12345"));
+
 
 		String[] fio = csvDto.getFio().split(" ");
 		VolunteerCreateDTO createDto = new VolunteerCreateDTO(
