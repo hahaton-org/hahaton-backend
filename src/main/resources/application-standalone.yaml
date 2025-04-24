@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: "hahaton-backend"
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  # jpa:
+  #   properties:
+  #     hibernate:
+  #       jdbc:
+  #         batch_size: 50
+  #       order_inserts: true
+  #       order_updates: true
+jwt:
+  secret: afbbf5f1a4875cb123b7ba83676260fba236757ffb8619e9006e56d80d158df8
+  expiration: 999M
+logging:
+  level:
+    org.springframework.security: DEBUG
