@@ -15,4 +15,8 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, UUID> {
         "achievements.bonusArchives"
     })
     Optional<Volunteer> findFetchById(UUID id);
+
+    Optional<Volunteer> findByMail(String mail);
+
+    boolean existsByMail(String mail);
 }

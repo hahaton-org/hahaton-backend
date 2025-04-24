@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -77,6 +78,41 @@ public class BonusService {
         return savedBonus;
     }
 
+    public List<Bonus> createAll(List<BonusCreateDTO> dtos) {
+        Category max = categoryService.getByName(CategoryType.MAXIMUM);
+        Category medium = categoryService.getByName(CategoryType.MEDIUM);
+        Category minimum = categoryService.getByName(CategoryType.MINIMUM);
+        List<Bonus> entities = new ArrayList<>();
+        
+        final LocalDateTime now = LocalDateTime.now();
+        dtos.forEach(dto -> {
+            
+            final UUID bonusId = UUID.randomUUID();
+            Category category;
+            if(dto.category() == CategoryType.MAXIMUM) {
+                category = max;
+            } else if(dto.category() == CategoryType.MEDIUM) {
+                category = medium;
+            } else {
+                category = minimum;
+            }
+
+            Achievement achievement = achievementService.getReference(dto.achievementId());
+            final Bonus bonus = Bonus.builder()
+            .id(bonusId)
+                .achievement(achievement)
+                .category(category)
+                .createdAt(now)
+                .active(DEFAULT_CREATE_ACTIVE)
+                .updatedAt(now)
+            .build();
+
+            entities.add(bonus);
+        });
+        
+        return entities;
+    }
+
 	public Bonus update(UUID id, BonusUpdateDTO dto) {
 		Bonus bonus = getById(id);
 	
@@ -101,5 +137,9 @@ public class BonusService {
         final Bonus bonus = this.getById(id);
 
         bonusRepository.delete(bonus);
+    }
+
+    public void deactivateBonuses() {
+        bonusRepository.deactivateAllActiveBonuses();
     }
 }

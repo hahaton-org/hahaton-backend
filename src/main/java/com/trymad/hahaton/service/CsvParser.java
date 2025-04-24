@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,13 +19,14 @@ import com.trymad.hahaton.web.dto.CsvDTO;
 @Service
 public class CsvParser {
 	
-	public List<CsvDTO> parse(MultipartFile file) throws IllegalStateException, IOException, CsvValidationException {
-        List<CsvDTO> csvList = new ArrayList<>();
+	public Map<Integer, CsvDTO> parse(MultipartFile file) throws IllegalStateException, IOException, CsvValidationException {
+        Map<Integer, CsvDTO> csvList = new HashMap<>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         try (CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
             String[] nextLine;
 			reader.readNext();
 
+			int counter = 1;
             while ((nextLine = reader.readNext()) != null) {
 				if(nextLine.length <= 1) break;
                 CsvDTO csvDTO = new CsvDTO();
@@ -34,7 +37,7 @@ public class CsvParser {
 				csvDTO.setBirthday(LocalDate.parse(nextLine[4], formatter));
 				csvDTO.setAchievements(nextLine[5]);
 
-				csvList.add(csvDTO);
+				csvList.put(counter++, csvDTO);
             }
         }
 

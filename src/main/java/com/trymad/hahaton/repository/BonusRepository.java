@@ -2,6 +2,7 @@ package com.trymad.hahaton.repository;
 
 import com.trymad.hahaton.entity.Bonus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -21,4 +22,12 @@ public interface BonusRepository extends JpaRepository<Bonus, UUID> {
         WHERE b.achievement.volunteer.id = :id
     """)
     List<Bonus> findByVolunteerId(@Param("id") UUID id);
+
+    @Modifying
+    @Query("""
+        UPDATE Bonus b
+        SET b.active = false
+        WHERE b.active = true
+    """)
+    void deactivateAllActiveBonuses();
 }

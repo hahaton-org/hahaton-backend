@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +34,22 @@ public class VolunteerService {
     public Volunteer getFetchById(UUID id) {
         return volunteerRepository.findFetchById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with id: " + id));
+    }
+
+    @Transactional(readOnly = true)
+    public Volunteer getReference(UUID id) {
+        return volunteerRepository.getReferenceById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Volunteer getByMail(String mail) {
+        return volunteerRepository.findByMail(mail)
+            .orElseThrow(() -> new EntityNotFoundException("Volunteer not found with mail: " + mail));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByMail(String mail) {
+        return volunteerRepository.existsByMail(mail);
     }
 
 	@Transactional(readOnly = true)
@@ -59,6 +76,19 @@ public class VolunteerService {
 
         return volunteerRepository.save(volunteer);
     }
+
+    public List<Volunteer> createAll(List<VolunteerCreateDTO> createDto) {
+        List<Volunteer> volunteers = new ArrayList<>();
+        createDto.forEach(
+            dto ->{
+                Volunteer volunteer = this.create(dto);
+                volunteers.add(volunteer);
+            } 
+        );
+
+        return volunteers;
+    }
+
 
     public Volunteer update(UUID id, VolunteerUpdateDTO dto) {
         final Volunteer volunteer = this.getById(id);

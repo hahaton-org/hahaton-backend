@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -33,6 +35,11 @@ public class AchievementService {
                 .orElseThrow(() -> new EntityNotFoundException("Achievement not found with id: " + id));
     }
 
+    @Transactional(readOnly = true)
+    public Achievement getReference(UUID id) {
+        return achievementRepository.getReferenceById(id);
+    }
+
 	public List<Achievement> getAll(UUID volunteerId) {
 		List<Achievement> result = achievementRepository.findAll();
 		if(volunteerId != null) result = result.stream().filter(a -> a.getVolunteer().getId().equals(volunteerId)).toList();
@@ -53,6 +60,25 @@ public class AchievementService {
                 .build();
 
         return achievementRepository.save(achievement);
+    }
+
+    public Map<Integer, Achievement> createAll(Map<Integer, AchievementCreateDTO> dto) {
+        final Map<Integer, Achievement> ach = new HashMap<>();
+        final LocalDateTime now = LocalDateTime.now();
+        dto.forEach( (key, values) -> {
+            final Volunteer volunteer = volunteerService.getReference(values.volunteerId());
+            final Achievement achievement = Achievement.builder()
+                .id(UUID.randomUUID())
+                .volunteer(volunteer)
+                .description(values.description())
+                .createdAt(now)
+                .updatedAt(now)
+                .build();
+            Achievement entity = achievementRepository.save(achievement);
+            ach.put(key, entity);
+        });
+
+        return ach;
     }
 
     public Achievement update(UUID id, AchievementCreateDTO dto) {
